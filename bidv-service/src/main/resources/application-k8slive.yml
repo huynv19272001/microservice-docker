@@ -1,0 +1,78 @@
+server:
+    #    address: 0.0.0.0
+    port: 19202
+spring:
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    sleuth:
+        sampler:
+            probability: 0
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: ${DB_ESB_PASS:esb@2018}
+        url: ${DB_ESB_URL:jdbc:oracle:thin:@esbsg-scan:1521/esbsg.lienvietpostbank.com.vn}
+        username: ${DB_ESB_USER:USER_ESB}
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    eureka:
+        enabled: true
+constant:
+    KEY_FACTORY_ALGORITHM: RSA
+    SIGNATURE_ALGORITHM: SHA256withRSA
+    HAS_ROLE: 'BIDVService'
+    SERVICE_ID: '910000'
+    PRODUCT_CODE_IMPORT_MESSAGE_CT001: 'BIDV_TRANSACTION_IMPORT_MESSAGE_CT001'
+    PRODUCT_CODE_EXPORT_MESSAGE_CT002: 'BIDV_TRANSACTION_EXPORT_MESSAGE_CT002'
+    PRODUCT_CODE_RESULTS_MESSAGE_CT003: 'BIDV_TRANSACTION_RESULTS_MESSAGE_CT003'
+    PRODUCT_CODE_UPDATE_EXPORTED_MESSAGE_CT005: 'BIDV_TRANSACTION_UPDATE_EXPORTED_MESSAGE_CT005'
+    PRODUCT_CODE_SEQUENCE_EXPORT_MESSAGE_CT006: 'BIDV_TRANSACTION_SEQUENCE_EXPORT_MESSAGE_CT006'
+    CHECK_VERIFY: ${CHECK_VERIFY:false}

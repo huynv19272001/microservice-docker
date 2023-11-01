@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.lpb.esb</groupId>
+        <artifactId>esb-microservice</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>${main.baseDir}/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>bidv-service</artifactId>
+
+    <properties>
+        <service.class.main>com.lpb.service.bidv.BIDVMain</service.class.main>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lpb.esb</groupId>
+            <artifactId>esb-common-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <scope>runtime</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.oracle.ojdbc</groupId>
+                    <artifactId>simplefan</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.oracle.ojdbc</groupId>
+                    <artifactId>ons</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+    </dependencies>
+</project>
