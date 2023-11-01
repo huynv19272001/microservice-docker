@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: sql-service
+    namespace: esb
+    labels:
+        app: deployment-esb-sql-service
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            workload.user.cattle.io/workloadselector: deployment-esb-sql-service
+    template:
+        metadata:
+            labels:
+                workload.user.cattle.io/workloadselector: deployment-esb-sql-service
+        spec:
+            containers:
+                -   envFrom:
+                        -   configMapRef:
+                                name: esb-cm
+                                optional: false
+                    image: docker-registry.lienvietpostbank.com.vn:5000/esb-ms/sql-service:dev-1.0.0
+                    imagePullPolicy: Always
+                    name: sql-service
+                    ports:
+                        -   containerPort: 18320
+                            protocol: TCP
+                    readinessProbe:
+                        failureThreshold: 3
+                        initialDelaySeconds: 10
+                        periodSeconds: 2
+                        successThreshold: 2
+                        tcpSocket:
+                            port: 18320
+                        timeoutSeconds: 2
+                    resources: { }
+                    securityContext:
+                        capabilities: { }
+                    terminationMessagePath: /dev/termination-log
+                    terminationMessagePolicy: File
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: sql-service
+    namespace: esb
+spec:
+    ports:
+        - name: sql-service-18320
+          port: 18320
+    type: ClusterIP
+    selector:
+        workload.user.cattle.io/workloadselector: deployment-esb-sql-service
+
+

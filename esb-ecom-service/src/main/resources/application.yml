@@ -1,0 +1,122 @@
+server:
+    #    address: 0.0.0.0
+    port: 9999
+service:
+    serviceIdAtm: '010004_03'
+    serviceId: '010007_1'
+    requestTxn: REQUEST_TXN
+    userNapas: ECOM_LPB
+    channel: 'ECOM'
+    contendSms: 'Ma xac thuc OTP cua giao dich la: %s. Quy khach dang thuc hien giao dich thanh toan %s VND tai %s qua the.'
+    headerSource: INTERNET_BANKING
+    headerPassword: 123456
+    headerUbscomp: FCUBS
+    headerUserId: EBANK
+    headerModuleId: IF
+    headerService: FCUBSInternalService
+    headerOperation: UploadTransferJRN
+    headerAction: QUERY
+    headerFunctionId: STDACC
+    bodySourceCode: UPEBK
+    bodyTxnCode: IBK
+    esbMakerIdUpload: EBANK
+    esbCheckerIdUpload: EBANK
+    secretKey: bace8f6e78ed97865d68cfb44ca5168e
+sms:
+    headerUserId: ESB_GATEWAY
+    headerService: SMS_FPT
+    headerOperation: SMS_ALL
+    headerPassword: lMjZ30djFY9F5Ut9EkkOsKLDyfVLmZfQe0kNxZCT5ScLEDNuoeHVWm7t0Bm1iLudqAYwLZXyUlnZFJDefp500MghJzXd/edBV0PC/AYy0iR388oR8NNLzJDMl2Xpi1W5VkR4X04YiiareCdzm99neKJHtsBsFS5rTAshqhxMcPc=
+    bodyServiceId: '090002'
+    bodySendInfoChannel: NAPAS_ECOM
+    bodySendInfoCategory: OTP_EBANK
+    bodySendInfoBranchCode: '000'
+    apiUrl: 'http://10.36.126.14:14455/SMSServiceGateWay?wsdl'
+spring:
+    application:
+        name: '@project.artifactId@'
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: ${ORC_ESB_PASS:user_esb12}
+        url: ${ORC_ESB_URL:jdbc:oracle:thin:@10.36.126.36:1521/EBDB}
+        username: ${ORC_ESB_USER:USER_ESB}
+        POOL_ACTIVE: 50
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+                orm.jpa: DEBUG
+                transaction: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true
+api:
+    listCardInfo: http://esb-card-service/api/v1/card/list-card-info
+    debitCardInfo: http://esb-card-service/api/v1/card/debit-card-info
+    otpCreateOtp: http://esb-transaction-service/api/v1/otp/create
+    otpVerifyOtp: http://esb-transaction-service/api/v1/otp/verify
+    transactionInitTransaction: http://esb-transaction-service/api/v1/transaction/init-transaction
+    transactionUploadTransferJrn: http://esb-transaction-service/api/v1/transaction/upload-transfer-jrn
+    transactionGetInitTransaction: http://esb-transaction-service/api/v1/transaction/{app-id}
+    getListAccount: http://esb-card-service/api/v1/account/get-account-list
+    getAvlBalance: http://esb-card-service/api/v1/account/get-avl-balance
+methodaction:
+    verifyPayment: VerifyPayment
+    verifyOTP: VerifyOTP
+    purchase: Purchase
+purchaseconfigapi:
+    sourceCode: UPEBK
+    txnCode: IBK
+    makerId: LVBSMB
+    checkerId: SYSTEM
+    #vì package đang để thêm dấu bằng sẽ trừ đi 1
+    countPurchase: 49

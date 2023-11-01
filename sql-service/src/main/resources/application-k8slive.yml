@@ -1,0 +1,105 @@
+server:
+    #    address: 0.0.0.0
+    port: 18320
+spring:
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+    datasource:
+        driverClassName: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: ${DB_ESB_PASS:esb@2018}
+        url: ${DB_ESB_URL:jdbc:oracle:thin:@esbsg-scan:1521/esbsg.lienvietpostbank.com.vn}
+        username: ${DB_ESB_USER:USER_ESB}
+        POOL_ACTIVE: 50
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+app:
+    datasource:
+        main:
+            driverClassName: oracle.jdbc.OracleDriver
+            jdbc-url: ${DB_ESB_URL:jdbc:oracle:thin:@esbsg-scan:1521/esbsg.lienvietpostbank.com.vn}
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            username: ${DB_ESB_USER:USER_ESB}
+            password: ${DB_ESB_PASS:esb@2018}
+        esb:
+            driverClassName: oracle.jdbc.OracleDriver
+            jdbc-url: ${DB_ESB_URL:jdbc:oracle:thin:@esbsg-scan:1521/esbsg.lienvietpostbank.com.vn}
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            username: ${DB_ESB_USER:USER_ESB}
+            password: ${DB_ESB_PASS:esb@2018}
+        swift:
+            driverClassName: oracle.jdbc.OracleDriver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            jdbc-url: ${DB_SWIFT_URL:jdbc:oracle:thin:@192.168.0.21:1521/ACCESS}
+            username: ${DB_SWIFT_USER:SWIFT_READER}
+            password: ${DB_SWIFT_PASS:Lpb#123}
+        weblpb:
+            driverClassName: com.mysql.cj.jdbc.Driver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            jdbc-url: ${DB_WEBLPB_URL:jdbc:mysql://10.16.126.18:3306/lienvietpostbank_com_vn?useSSL=false&enabledTLSProtocols=TLSv1.2}
+            username: ${DB_WEBLPB_USER:lienvietpostbank.com.vn-wjBO3A}
+            password: ${DB_WEBLPB_PASS:zVEWRVJ1xh5z}
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+                orm.jpa: DEBUG
+                transaction: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true

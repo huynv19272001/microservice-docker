@@ -1,0 +1,71 @@
+server:
+    #    address: 0.0.0.0
+    port: 19802
+spring:
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: user_esb12
+        url: jdbc:oracle:thin:@10.36.126.36:1521/EBDB
+        username: USER_ESB
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    eureka:
+        enabled: true
+service:
+    serviceId: 620000
+    hasRole: PTIService
+    headerProductCode: PTI_HEADER_VALUES

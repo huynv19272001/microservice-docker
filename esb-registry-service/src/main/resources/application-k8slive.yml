@@ -1,0 +1,43 @@
+server:
+    #    address: 0.0.0.0
+    port: 18001
+spring:
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    security:
+        user:
+            name: admin
+            password: 123456
+    zipkin:
+        enabled: false
+eureka:
+    client:
+        fetch-registry: false
+        healthcheck:
+            enabled: true
+        register-with-eureka: false
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    server:
+        enable-self-preservation: false
+        eviction-interval-timer-in-ms: 2000
+        expected-client-renewal-interval-seconds: 3
+        response-cache-update-interval-ms: 5000
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                web: DEBUG
+                web.HttpLogging: INFO
+        com.netflix.eureka.registry.AbstractInstanceRegistry: ERROR

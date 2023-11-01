@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:fcub="http://fcubs.ofss.com/service/FCUBSExternalService">
+	<soapenv:Header/>
+	<soapenv:Body>
+		<fcub:EXTERNALSERVICE_REQ>
+			<FCUBS_HEADER>
+				<MSGID>%s</MSGID>
+				<USERID>%s</USERID>
+				<SERVICE>%s</SERVICE>
+				<OPERATION>%s</OPERATION>
+				<PASSWORD>%s</PASSWORD>
+			</FCUBS_HEADER>
+			<FCUBS_BODY>
+				<SERVICE_IO>
+					<SERVICE_ID>%s</SERVICE_ID>
+					<PRODUCT_CODE>%s</PRODUCT_CODE>
+				</SERVICE_IO>
+				<JOB_INFO>
+					<JOB_ID>%s</JOB_ID>
+					<JOB_AC_NO>%s</JOB_AC_NO>
+				</JOB_INFO>
+			</FCUBS_BODY>
+		</fcub:EXTERNALSERVICE_REQ>
+	</soapenv:Body>
+</soapenv:Envelope>

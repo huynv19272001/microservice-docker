@@ -1,0 +1,76 @@
+node {
+  wrap([$class: 'BuildUser']) {
+    def user = env.BUILD_USER_ID
+    buildDescription "Deployer: ${user}"
+  }
+}
+pipeline {
+    agent {
+        label 'agent1'
+    }
+    options {
+        skipStagesAfterUnstable()
+        disableConcurrentBuilds()
+    }
+    stages {
+        stage('Check Out') {
+            steps {
+            echo "${env.gitBranch}"
+            git url: "http://gitlab.lienvietpostbank.com.vn/esb/microservice.git",branch: "${env.gitBranch}",
+                    credentialsId: 'git'
+            echo "Pulling...${env.gitBranch}"
+            }
+        }
+        stage('Build') {
+            agent {
+                docker {
+                    label 'agent1'
+                    image 'maven:3.6.3-openjdk-8'
+                    args '-v /home/jenkins/.m2/repository:/home/jenkins/.m2/repository'
+                    reuseNode true
+                }
+            }
+            steps {
+                script {
+                    echo "Start building image: ${env.image}"
+                    echo "$JOB_NAME"
+                    dir("/DATA/soft/jenkins/workspace/$JOB_NAME") {
+                        sh "pwd"
+                            echo "installing msvc"
+                            sh "mvn clean install -N"
+                            sh "mvn clean install spring-boot:repackage -DskipTests -pl esb-common-service/"
+                            sh "mvn clean install spring-boot:repackage -DskipTests -pl ${env.image}"
+                    }
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                     echo "$JOB_NAME"
+                     dir("/DATA/soft/jenkins/workspace/$JOB_NAME") {
+                        sh "docker login docker-registry.lienvietpostbank.com.vn:5000 -u uniform -p 123456a@"
+                        sh "docker build -t ${env.image} -f dockerfile/Dockerfile-${env.image} ."
+                        sh "docker tag ${env.image}:latest docker-registry.lienvietpostbank.com.vn:5000/esb-ms/${env.image}:dev-1.0.0"
+                        sh "docker push docker-registry.lienvietpostbank.com.vn:5000/esb-ms/${env.image}:dev-1.0.0"
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                     echo "$JOB_NAME"
+                     dir("/DATA/soft/jenkins/workspace/$JOB_NAME") {
+                        //Create or update resources
+                        echo "jenkins-yaml/deployment/deployment-dev.yaml"
+                        //echo "jenkins-yaml/service/service-dev.yaml"
+                        sh("kubectl --namespace=esb apply -f jenkins-yaml/deployment/deployment-dev.yaml")
+                        //sh("kubectl --namespace=esb apply -f jenkins-yaml/service/service-dev.yaml")
+                        sh("kubectl rollout restart deploy ${env.image} -n esb")
+                        }
+                     }
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <tem:SaveFileSig>
+            <!--Optional:-->
+            <tem:id>%d</tem:id>
+            <!--Optional:-->
+            <tem:fileName>%s</tem:fileName>
+            <!--Optional:-->
+            <tem:bytes>%s</tem:bytes>
+        </tem:SaveFileSig>
+    </soapenv:Body>
+</soapenv:Envelope>

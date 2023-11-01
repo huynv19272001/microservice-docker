@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>esb-microservice</artifactId>
+        <groupId>com.lpb.esb</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>${main.baseDir}/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>vietlot-service</artifactId>
+
+    <properties>
+        <service.class.main>com.lpb.esb.service.vietlot.VietlotMain</service.class.main>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lpb.esb</groupId>
+            <artifactId>esb-common-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

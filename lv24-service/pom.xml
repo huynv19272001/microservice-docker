@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>esb-microservice</artifactId>
+        <groupId>com.lpb.esb</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>lv24-service</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web-services</artifactId>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.lpb.esb</groupId>
+            <artifactId>esb-common-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; tag::wsdl[] &ndash;&gt;-->
+<!--&lt;!&ndash;            <plugin>&ndash;&gt;-->
+<!--&lt;!&ndash;                <groupId>org.jvnet.jaxb2.maven2</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <artifactId>maven-jaxb2-plugin</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <version>0.15.1</version>&ndash;&gt;-->
+<!--&lt;!&ndash;                <executions>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <id>vi-viet-connect</id>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <goals>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <goal>generate</goal>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </goals>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;                    <schemaLanguage>WSDL</schemaLanguage>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <generatePackage>com.lpb.middleware.lv24</generatePackage>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <generateDirectory>${project.build.directory}/generated-sources/xjc/lv24</generateDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <schemaIncludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <include>vi-viet-connect.wsdl</include>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </schemaIncludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                            &lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;                            <schemas>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <schema>&ndash;&gt;-->
+<!--&lt;!&ndash;                                    <url>http://10.36.209.68:8182/connect/services/ViVietConnect?wsdl</url>&ndash;&gt;-->
+<!--&lt;!&ndash;                                </schema>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </schemas>&ndash;&gt;-->
+<!--&lt;!&ndash;                            &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                        </configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <id>sql-service</id>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <goals>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <goal>generate</goal>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </goals>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <generatePackage>com.lpb.middleware.sqlservice</generatePackage>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <generateDirectory>${project.build.directory}/generated-sources/xjc/sql-service</generateDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <schemaDirectory>${project.basedir}/src/main/resources/wsdl</schemaDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <schemaIncludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <include>sql-service.wsdl</include>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </schemaIncludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </execution>&ndash;&gt;-->
+<!--&lt;!&ndash;                </executions>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            </plugin>&ndash;&gt;-->
+<!--            &lt;!&ndash; end::wsdl[] &ndash;&gt;-->
+<!--        </plugins>-->
+<!--    </build>-->
+
+</project>

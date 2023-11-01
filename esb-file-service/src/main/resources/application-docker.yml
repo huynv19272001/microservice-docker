@@ -1,0 +1,77 @@
+server:
+    #    address: 0.0.0.0
+    port: 18319
+file-config:
+    HOST_SFTP: 'ftpsrv.shs.com.vn'
+    PORT_SFTP: 2121
+    USER_SFTP: 'lpbadmin'
+    PASSWORD_SFTP: 'Lpb@dmin'
+    DATA_TIMEOUT: 60000
+    CONNECT_TIMEOUT: 60000
+    REMOTE_FILE_PATH_DOWNLOAD: ${DOWNLOAD_FILE_SERVICE:downloads}
+    REMOTE_FILE_PATH_UPLOAD: ${UPLOAD_FILE_SERVICE:uploads}
+    REMOTE_FILE_PATH_SFTP: '/UploadLPB/'
+spring:
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+                orm.jpa: DEBUG
+                transaction: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true
+autodebit-daiichi:
+    serviceId: '020001'
+    service: AUTODEBIT
+    operation: AUTODEBIT_DAIICHI
+    productCodeDangKy: DANG_KY
+    productCodeGiaoDich: GIAO_DICH

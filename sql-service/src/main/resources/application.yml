@@ -1,0 +1,153 @@
+server:
+    #    address: 0.0.0.0
+    port: 18320
+spring:
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+    datasource:
+        driverClassName: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: ${ORC_ESB_PASS:user_esb12}
+        url: ${ORC_ESB_URL:jdbc:oracle:thin:@10.36.126.36:1521/EBDB}
+        username: ${ORC_ESB_USER:USER_ESB}
+        POOL_ACTIVE: 50
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+app:
+    datasource:
+        main:
+            driverClassName: oracle.jdbc.OracleDriver
+            jdbc-url: jdbc:oracle:thin:@10.36.126.36:1521/EBDB
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            username: USER_ESB
+            password: user_esb12
+        esb:
+            driverClassName: oracle.jdbc.OracleDriver
+            jdbc-url: jdbc:oracle:thin:@10.36.126.36:1521/EBDB
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            username: USER_ESB
+            password: user_esb12
+        core:
+            driverClassName: oracle.jdbc.OracleDriver
+            jdbc-url: jdbc:oracle:thin:@10.36.126.45:1521/coredev
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            username: lvbhost
+            password: host4dev1
+        core2:
+            driverClassName: oracle.jdbc.OracleDriver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            password: host4dev
+            jdbcUrl: jdbc:oracle:thin:@10.37.11.28:1521/fcdev
+            username: LVBHOST
+        los:
+            driverClassName: oracle.jdbc.OracleDriver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            password: core4LOSdev
+            jdbcUrl: jdbc:oracle:thin:@10.37.11.70:1521/FCLOSDEV
+            username: lvbhost
+        dwh:
+            driverClassName: oracle.jdbc.OracleDriver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            password: LPBDW
+            jdbcUrl: jdbc:oracle:thin:@10.37.11.47:1521/ftpuat
+            username: LPBDW
+        pmdg:
+            driverClassName: com.mysql.cj.jdbc.Driver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            jdbc-url: jdbc:mysql://10.37.11.87:3306/mcollat_uat_los_060521?useSSL=false
+            username: root
+            password: ptud@2017
+        weblpb:
+            driverClassName: com.mysql.cj.jdbc.Driver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            jdbc-url: jdbc:mysql://10.37.11.66:3306/uat_lienvietpostbank_com_vn?useSSL=false
+            username: uat.lienvietpostbank.com.vn-bVM6Oe
+            password: xUJUuxD2Incf
+        lv24:
+            driverClassName: oracle.jdbc.OracleDriver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            jdbc-url: jdbc:oracle:thin:@10.36.126.42:1521/VIVIET
+            username: ESMAC_VV_TE
+            password: esmac_vv_te
+        swift:
+            driverClassName: oracle.jdbc.OracleDriver
+            hikari:
+                connection-timeout: 60000
+                maximum-pool-size: 10
+            jdbc-url: ${DB_SWIFT_URL:jdbc:oracle:thin:@10.37.11.65:1521/ACCESS}
+            username: ${DB_SWIFT_USER:SWIFT_READER}
+            password: ${DB_SWIFT_PASS:Lpb#123}
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+                orm.jpa: DEBUG
+                transaction: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true

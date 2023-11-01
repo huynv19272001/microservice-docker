@@ -1,0 +1,80 @@
+server:
+    #    address: 0.0.0.0
+    port: 8080
+service:
+#    baseUrl: 'https://apigw-staging.mafc.vn/payment-gw/v2/api/'
+    authorization: 'Bearer
+eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJMVkJBTksiLCJjb2xsZWN0b3IiOiJMVkJBTksiLCJ2YWxpZEZyb20iOjE2NDUxNTgyNTQ4OTMsInZhbGlkVG8iOjE4MDI4MzgyNTQ4OTMsInZhbGlkSVBzIjoiIiwiaWF0IjoxNjQ1MTU4MjU0LCJleHAiOjE4MDI4MzgyNTR9.D8W7rHsDGkY2SptT4VRmangiCxaQrWo0DsVQRvQAHjCEdkUmnxRCEOcQqpZy8D4nhzc6g7pYitC-bASTHcQa7JzSYOa85CiMqVJewG7FumVmNU5OyCzfNk6Im-zF9BpKrnlolUR_Geo6xrtnEdLA-SRLx889qp4nypNc-ShhLU1uPYpqwA3g8EhAA3amH8E_lffwLxsboihKu_zeIPM1RS_HR0ulxnTbxneCoVvUasKcwp2KoUwCj3__piIMgYIY-NfVJTeXGLMcLeY3BuWfWNI1bANZBoe9fL-60_hEnJ-7uVnCQq0Ojl-PMGphczpxxf-fFrbOKq54Ui9Rp2ZJfA'
+    channel: 'LVBANK'
+    collector: 'LVBANK'
+    isSecuredProtocol: 'true'
+    connectionRequestTimeout: '10'
+    connectTimeout: 10
+    socketTimeout: 45
+    socketTimeout_checkStatus: '45'
+spring:
+    application:
+        name: '@project.artifactId@'
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: ${ORC_ESB_PASS:user_esb12}
+        url: ${ORC_ESB_URL:jdbc:oracle:thin:@10.36.126.36:1521/EBDB}
+        username: ${ORC_ESB_USER:USER_ESB}
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+                orm.jpa: DEBUG
+                transaction: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true

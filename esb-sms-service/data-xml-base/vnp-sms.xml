@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <SendMT xmlns="http://www.vnpay.vn/VASContent">
+            <Destination>%s</Destination>
+            <Sender>%s</Sender>
+            <KeywordName>%s</KeywordName>
+            <OutContent>%s</OutContent>
+            <ChargingFlag>%s</ChargingFlag>
+            <MOSeqNo>%s</MOSeqNo>
+            <ContentType>%s</ContentType>
+            <LocalTime>%s</LocalTime>
+            <Username>%s</Username>
+            <Password>%s</Password>
+        </SendMT>
+    </soap:Body>
+</soap:Envelope>

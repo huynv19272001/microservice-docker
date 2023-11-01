@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.lpb.esb</groupId>
+    <artifactId>esb-file-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>com.lpb.esb</groupId>
+        <artifactId>esb-microservice</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>${main.baseDir}/pom.xml</relativePath>
+    </parent>
+    <packaging>jar</packaging>
+    <properties>
+        <service.class.main>com.lpb.esb.service.file.FileMain</service.class.main>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lpb.esb</groupId>
+            <artifactId>esb-common-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+        <!-- sftp -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,8 @@
+package com.lpb.esb.service.lv24.service;
+
+import com.lpb.esb.service.common.model.response.ResponseModel;
+import com.lpb.esb.service.lv24.model.EsbRequestDTO;
+
+public interface DangKyBdsdQuaNotificationServiceV0 extends BaseService {
+    ResponseModel sendMessages(EsbRequestDTO esbRequest);
+}

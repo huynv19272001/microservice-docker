@@ -1,0 +1,79 @@
+server:
+    #    address: 0.0.0.0
+    port: 9995
+service:
+#    getToken: 'http://113.160.248.225:4151/system/Token/Get'
+#    serviceId: '030006_04'
+#    userName: 'lienketviet'
+#    password: '123'
+#    partnerKey: 'e55ce74f88b2e8ccf08037233d99a114'
+#    getInfoCustomerBill: 'http://113.160.248.225:4151/payment/Payment/Get_info_customer_bill?maKhachhang='
+#    paymentKeyNoBill: 'http://113.160.248.225:4151/payment/Payment/Payment_key_no_bill/?key=%s&tenVi=%s'
+#    tenVi: 'LIENKETVIET'
+    service_info: '<SERVICE_INFO><TRAN_INFO><APPMSG_ID>%s</APPMSG_ID><MSG_ID>%s</MSG_ID><TXN_STAT>%s</TXN_STAT><ERROR_CODE>%s</ERROR_CODE><ERROR_MSG>%s</ERROR_MSG><REFCODE>%s</REFCODE><REFDESC>%s</REFDESC><SERVICE_ID>%s</SERVICE_ID><PRODUCT_CODE>%s</PRODUCT_CODE><TXN_CODE>%s</TXN_CODE><TXN_CHANEL>%s</TXN_CHANEL><TERMINAL_ID>%s</TERMINAL_ID><REQUEST_BY>%s</REQUEST_BY><TXN_REQ_ESB>%s</TXN_REQ_ESB><TXN_RES_ESB>%s</TXN_RES_ESB><TXN_REQ_PAR>%s</TXN_REQ_PAR><TXN_RES_PAR>%s</TXN_RES_PAR><REQUEST_ACCOUNT>%s</REQUEST_ACCOUNT><RECEIVE_ACCOUNT>%s</RECEIVE_ACCOUNT><BILL_INFO>%s</BILL_INFO><SETTLED_AMOUNT>%s</SETTLED_AMOUNT><REL_REQ_CODE>%s</REL_REQ_CODE><REQ_CODE>%s</REQ_CODE><OTHER_INFO>%s</OTHER_INFO><UDF1>%s</UDF1><UDF2>%s</UDF2><UDF3>%s</UDF3></TRAN_INFO></SERVICE_INFO>'
+spring:
+    application:
+        name: '@project.artifactId@'
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: ${ORC_ESB_PASS:user_esb12}
+        url: ${ORC_ESB_URL:jdbc:oracle:thin:@10.36.126.36:1521/EBDB}
+        username: ${ORC_ESB_USER:USER_ESB}
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+                orm.jpa: DEBUG
+                transaction: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true

@@ -1,0 +1,85 @@
+server:
+    #    address: 0.0.0.0
+    port: 19803
+spring:
+    application:
+        name: '@project.artifactId@'
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: user_esb12
+        url: jdbc:oracle:thin:@10.36.126.36:1521/EBDB
+        username: USER_ESB
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    eureka:
+        enabled: true
+constant:
+    ibmSqlService:
+        queryHrLv24V:
+            url: http://10.36.126.14:11290/SQLService
+            header:
+                userId: LV24_VV
+                service: SQLService
+                operation: SQL_DML
+                password: lMjZ30djFY9F5Ut9EkkOsKLDyfVLmZfQe0kNxZCT5ScLEDNuoeHVWm7t0Bm1iLudqAYwLZXyUlnZFJDefp500MghJzXd/edBV0PC/AYy0iR388oR8NNLzJDMl2Xpi1W5VkR4X04YiiareCdzm99neKJHtsBsFS5rTAshqhxMcPc=
+            body:
+                serviceId: 900006
+                productCode: QUERY_HR_LV24_V
+file:
+    lv24:
+        prefix: lv24-service/data-xml-base/
+        xml:
+            bdsd-request-data: bdsd-notification-request-data.xml
+            bdsd-execute: bdsd-notification-execute.xml

@@ -1,0 +1,11 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:fun="http://function.ws.core.gateway.com/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <fun:execute>
+            <!--Optional:-->
+            <User>%s</User>
+            <!--Optional:-->
+            <RequestData><![CDATA[%s]]></RequestData>
+        </fun:execute>
+    </soapenv:Body>
+</soapenv:Envelope>

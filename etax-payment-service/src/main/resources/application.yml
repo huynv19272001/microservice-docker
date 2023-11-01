@@ -1,0 +1,96 @@
+server:
+    #    address: 0.0.0.0
+    port: 19803
+spring:
+    application:
+        name: '@project.artifactId@'
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: user_esb12
+        url: jdbc:oracle:thin:@10.36.126.36:1521/EBDB
+        username: USER_ESB
+#    jackson:
+#        property-naming-strategy: SNAKE_CASE
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true
+service:
+    flex:
+        findacc: http://flex-query-service/rest/api/query-account-info
+        findaccdtl: http://flex-query-service/rest/api/query-account-detail
+        findcust: http://flex-query-service/rest/api/query-customer-info
+    card:
+#        finddrcard: http://esb-card-service/api/v1/card/debit-card-info
+        findlstcard: http://esb-card-service/api/v1/card/list-card-info
+    otp:
+        create: http://esb-transaction-service/api/v1/otp/create
+        verify: http://esb-transaction-service/api/v1/otp/verify
+    transaction:
+        init: http://esb-transaction-service/api/v1/transaction/init-transaction
+        gett: http://esb-transaction-service/api/v1/transaction/
+        conf: http://esb-transaction-service/api/v1/transaction/upload-transfer-jrn
+        ctad: http://esb-transaction-service/api/v1/transaction/upload-transfer-citad
+    smsgw:
+        category: http://sms-gateway-service/sms/gateway/category
+    file:
+        convert2pdf: http://file-converter-service/docx/convert-2-pdf
+resource:
+#    receipt-url: http://10.36.126.20:30101/esb-gateway-service/etax-payment-service/api/v1/get-receipt/
+    receipt-url: https://mkag-uat.lienvietpostbank.com.vn/mid/p/tct/get-receipt/
+    check-code: I86ROAvhh7
+# environment: TEST, PILOT, PROD
+env:
+    do: TEST

@@ -1,0 +1,1 @@
+<ReceiveNotificationRequest><RequestHeader><Command>receiveNotification</Command><Password>%s</Password><SystemTraceId>%s</SystemTraceId><RequestDateTime>%s</RequestDateTime><ChannelType>API</ChannelType></RequestHeader><ReceiveNotificationRequestBody><ListMessage>%s</ListMessage></ReceiveNotificationRequestBody><Signature></Signature></ReceiveNotificationRequest>

@@ -1,0 +1,91 @@
+server:
+    #    address: 0.0.0.0
+    port: 19401
+spring:
+    application:
+        name: '@project.artifactId@'
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        hikari:
+            connection-timeout: 60000
+            maximum-pool-size: 10
+        password: user_esb12
+        url: jdbc:oracle:thin:@10.36.126.36:1521/EBDB
+        username: USER_ESB
+    jackson:
+        property-naming-strategy: SNAKE_CASE
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.Oracle10gDialect
+    sleuth:
+        sampler:
+            probability: 1
+    zipkin:
+        base-url: ${ZIPKIN_SERVICE:http://10.36.126.15:9411/}
+
+eureka:
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        registryFetchIntervalSeconds: 15
+        service-url:
+            defaultZone: ${EUREKA_REGISTRY_SERVICE:http://admin:123456@localhost:18001/eureka}
+    instance:
+        lease-expiration-duration-in-seconds: 5
+        lease-renewal-interval-in-seconds: 2
+        preferIpAddress: true
+info:
+    run:
+        dir: ${user.dir}
+        user: ${user.name}
+logging:
+    level:
+        org:
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
+                web: DEBUG
+                web.HttpLogging: INFO
+                web.filter.CommonsRequestLoggingFilter: DEBUG
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+ribbon:
+    ServerListRefreshInterval: 5000
+    eureka:
+        enabled: true
+file:
+    tct:
+        prefix: data-xml-base/
+        xml:
+            request: template-request.xml
+            header: header.xml
+            lptb: body-lptb.xml
+            tcn: body-tcn.xml
+            tnd: body-tnd.xml
+            nop-chung-tu: body-nop-chung-tu.xml
+            huy-chung-tu: body-huy-chung-tu.xml
+            cmnd: body-cmnd.xml
+            mst: body-mst.xml
+            thu-nop-mst: body-thu-nop-mst.xml
+            truy-van-chung-tu: body-truy-van-chung-tu.xml
+        cert:
+            prefix: tct-cert/
+            pfx: LPB/lpbtct.pfx
+            cer: LPB/payment.lienvietpostbank.com.vn.cer
+        gov:
+            jks: TCTThue/esb-gdt-gov.jks
+            pass: 123456
